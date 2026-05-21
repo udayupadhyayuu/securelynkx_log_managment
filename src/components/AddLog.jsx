@@ -297,18 +297,44 @@ function AddLog({ user }) {
         <button
           type="submit"
           disabled={loading}
-          className="
-          w-full
-          bg-blue-600
-          hover:bg-blue-700
-          text-white
-          py-3
-          rounded-2xl
-          font-semibold
-          transition
-        "
+          className={`
+    w-full
+    py-3
+    rounded-2xl
+    font-semibold
+    transition-all
+    duration-200
+    flex
+    items-center
+    justify-center
+    gap-3
+    shadow-lg
+
+    ${
+      loading
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-blue-600 hover:bg-blue-700 text-white"
+    }
+  `}
         >
-          {loading ? "Saving..." : "Save Log"}
+          {loading ? (
+            <>
+              <div
+                className="
+          w-5
+          h-5
+          border-2
+          border-white
+          border-t-transparent
+          rounded-full
+          animate-spin
+        "
+              ></div>
+              Saving Log...
+            </>
+          ) : (
+            "Save Log"
+          )}
         </button>
       </form>
     </div>

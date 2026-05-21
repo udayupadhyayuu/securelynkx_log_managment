@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 function LogsTable({ logs = [], loadingLogs }) {
   const [search, setSearch] = useState("");
-  const [dateFilter, setDateFilter] = useState("all");
+  const [dateFilter, setDateFilter] = useState("today");
   const [sortField, setSortField] = useState("sno");
   const [sortOrder, setSortOrder] = useState("desc");
 

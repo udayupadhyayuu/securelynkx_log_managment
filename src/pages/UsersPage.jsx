@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
-
+import { toast } from "react-toastify";
 import { getUsers, createUser, updateUser } from "../services/api";
 
 function UsersPage({ user }) {
@@ -124,6 +123,8 @@ function UsersPage({ user }) {
       });
 
       if (result.status === "success") {
+        toast.success("User created successfully ✅");
+
         setUsername("");
 
         setPassword("");
@@ -135,9 +136,13 @@ function UsersPage({ user }) {
         loadUsers();
       } else {
         setCreateError(result.message);
+
+        toast.error(result.message);
       }
     } catch (error) {
       setCreateError("Failed to create user");
+
+      toast.error("Failed to create user");
     } finally {
       setCreateLoading(false);
     }
@@ -202,12 +207,16 @@ function UsersPage({ user }) {
       });
 
       if (result.status === "success") {
+        toast.success("User updated successfully ✅");
+
         setEditModal(false);
 
         loadUsers();
       }
     } catch (error) {
       setEditError("Failed to update user");
+
+      toast.error("Failed to update user");
     } finally {
       setEditLoading(false);
     }
@@ -296,9 +305,9 @@ function UsersPage({ user }) {
                   rounded-2xl
                 "
               >
-                <option value="user">User</option>
+                <option value="User">User</option>
 
-                <option value="admin">Admin</option>
+                <option value="Admin">Admin</option>
               </select>
             </div>
 
@@ -491,7 +500,7 @@ function UsersPage({ user }) {
                               font-semibold
 
                               ${
-                                item[2]?.toLowerCase() === "admin"
+                                item[2]?.toLowerCase() === "Admin"
                                   ? "bg-red-100 text-red-700"
                                   : "bg-blue-100 text-blue-700"
                               }
@@ -618,9 +627,9 @@ function UsersPage({ user }) {
                     py-4
                   "
                 >
-                  <option value="user">User</option>
+                  <option value="User">User</option>
 
-                  <option value="admin">Admin</option>
+                  <option value="Admin">Admin</option>
                 </select>
 
                 <div>

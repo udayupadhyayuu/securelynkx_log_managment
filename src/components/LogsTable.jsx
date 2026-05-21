@@ -3,7 +3,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { toast } from "react-toastify";
 
-function LogsTable({ logs = [], loadingLogs }) {
+function LogsTable({ logs = [], loadingLogs, hideStats = false }) {
   const [search, setSearch] = useState("");
   const [dateFilter, setDateFilter] = useState("today");
   const [sortField, setSortField] = useState("sno");
@@ -444,8 +444,9 @@ function LogsTable({ logs = [], loadingLogs }) {
 
         {/* STATS */}
 
-        <div
-          className="
+        {!hideStats && (
+          <div
+            className="
       grid
       grid-cols-1
       sm:grid-cols-2
@@ -453,71 +454,80 @@ function LogsTable({ logs = [], loadingLogs }) {
       gap-4
       mb-6
     "
-        >
-          <div
-            className="
+          >
+            <div
+              className="
         bg-blue-50
         border
         border-blue-100
         rounded-3xl
         p-5
       "
-          >
-            <p className="text-sm text-blue-600 font-medium">Today's Logs</p>
+            >
+              <p className="text-sm text-blue-600 font-medium">
+                {currentUser?.role === "Admin"
+                  ? "Today's Logs"
+                  : "My Today's Logs"}
+              </p>
 
-            <h3 className="text-3xl font-bold text-blue-700 mt-2">
-              {todayLogsCount}
-            </h3>
-          </div>
+              <h3 className="text-3xl font-bold text-blue-700 mt-2">
+                {todayLogsCount}
+              </h3>
+            </div>
 
-          <div
-            className="
+            <div
+              className="
         bg-green-50
         border
         border-green-100
         rounded-3xl
         p-5
       "
-          >
-            <p className="text-sm text-green-600 font-medium">Properties</p>
+            >
+              <p className="text-sm text-green-600 font-medium">Properties</p>
 
-            <h3 className="text-3xl font-bold text-green-700 mt-2">
-              {uniqueProperties}
-            </h3>
-          </div>
+              <h3 className="text-3xl font-bold text-green-700 mt-2">
+                {uniqueProperties}
+              </h3>
+            </div>
 
-          <div
-            className="
+            <div
+              className="
         bg-purple-50
         border
         border-purple-100
         rounded-3xl
         p-5
       "
-          >
-            <p className="text-sm text-purple-600 font-medium">Last Log</p>
+            >
+              <p className="text-sm text-purple-600 font-medium">
+                {currentUser?.role === "Admin" ? "Last Log" : "My Last Log"}
+              </p>
 
-            <h3 className="text-lg font-bold text-purple-700 mt-2">
-              {lastLogTime}
-            </h3>
-          </div>
+              <h3 className="text-lg font-bold text-purple-700 mt-2">
+                {lastLogTime}
+              </h3>
+            </div>
 
-          <div
-            className="
+            <div
+              className="
         bg-orange-50
         border
         border-orange-100
         rounded-3xl
         p-5
       "
-          >
-            <p className="text-sm text-orange-600 font-medium">Showing Logs</p>
+            >
+              <p className="text-sm text-orange-600 font-medium">
+                {currentUser?.role === "Admin" ? "Showing Logs" : "My Logs"}
+              </p>
 
-            <h3 className="text-3xl font-bold text-orange-700 mt-2">
-              {filteredLogs.length}
-            </h3>
+              <h3 className="text-3xl font-bold text-orange-700 mt-2">
+                {filteredLogs.length}
+              </h3>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* ACTIONS */}
 

@@ -22,11 +22,19 @@ function App() {
 
   const [loadingLogs, setLoadingLogs] = useState(true);
 
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("darkMode") === "true",
+  );
+
   // FETCH ONLY ONCE
 
   useEffect(() => {
     loadLogs();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   async function loadLogs() {
     try {
@@ -43,7 +51,7 @@ function App() {
   }
 
   return (
-    <>
+    <div className={darkMode ? "dark" : ""}>
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -73,7 +81,13 @@ function App() {
           path="/"
           element={
             user ? (
-              <Dashboard user={user} logs={logs} loadingLogs={loadingLogs} />
+              <Dashboard
+                user={user}
+                logs={logs}
+                loadingLogs={loadingLogs}
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+              />
             ) : (
               <Login setUser={() => location.reload()} />
             )
@@ -86,7 +100,13 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard user={user} logs={logs} loadingLogs={loadingLogs} />
+              <Dashboard
+                user={user}
+                logs={logs}
+                loadingLogs={loadingLogs}
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
+              />
             </ProtectedRoute>
           }
         />
@@ -135,7 +155,7 @@ function App() {
           }
         />
       </Routes>
-    </>
+    </div>
   );
 }
 

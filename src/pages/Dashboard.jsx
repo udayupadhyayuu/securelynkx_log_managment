@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 
 import LogsTable from "../components/LogsTable";
 
-function Dashboard({ user, logs, loadingLogs }) {
+function Dashboard({ user, logs, loadingLogs, darkMode, setDarkMode }) {
   return (
     <div
       className="
@@ -16,103 +16,140 @@ function Dashboard({ user, logs, loadingLogs }) {
       <Sidebar user={user} />
 
       <div className="flex-1 p-4 md:p-8">
-        <Navbar user={user} />
+        <Navbar user={user} darkMode={darkMode} setDarkMode={setDarkMode} />
 
         {/* STATS */}
 
-        <div
-          className="
-          grid
-          grid-cols-1
-          md:grid-cols-3
-          gap-5
-          mb-6
-        "
-        >
-          {/* TOTAL LOGS */}
-
+        {user.role === "Admin" && (
           <div
             className="
-            bg-white
-            rounded-3xl
-            p-6
-            shadow-sm
+            grid
+            grid-cols-1
+            md:grid-cols-4
+            gap-5
+            mb-6
           "
           >
-            <h3 className="text-gray-500">Total Logs</h3>
+            {/* TOTAL LOGS */}
 
-            <p
+            <div
               className="
-              text-4xl
-              font-bold
-              mt-3
-              text-blue-600
+              bg-white
+              rounded-3xl
+              p-6
+              shadow-sm
             "
             >
-              {logs.length}
-            </p>
-          </div>
+              <h3 className="text-gray-500">Total Logs</h3>
 
-          {/* TODAY LOGS */}
+              <p
+                className="
+                text-4xl
+                font-bold
+                mt-3
+                text-blue-600
+              "
+              >
+                {logs.length}
+              </p>
+            </div>
 
-          <div
-            className="
-            bg-white
-            rounded-3xl
-            p-6
-            shadow-sm
-          "
-          >
-            <h3 className="text-gray-500">Today's Logs</h3>
+            {/* TODAY LOGS */}
 
-            <p
+            <div
               className="
-              text-4xl
-              font-bold
-              mt-3
-              text-green-600
+              bg-white
+              rounded-3xl
+              p-6
+              shadow-sm
             "
             >
-              {
-                logs.filter((log) => {
-                  const today = new Date().toLocaleDateString("en-CA");
+              <h3 className="text-gray-500">Today's Logs</h3>
 
-                  const logDate = new Date(log[1]).toLocaleDateString("en-CA");
+              <p
+                className="
+                text-4xl
+                font-bold
+                mt-3
+                text-green-600
+              "
+              >
+                {
+                  logs.filter((log) => {
+                    const today = new Date().toLocaleDateString("en-CA");
 
-                  return logDate === today;
-                }).length
-              }
-            </p>
-          </div>
+                    const logDate = new Date(log[1]).toLocaleDateString(
+                      "en-CA",
+                    );
 
-          {/* ACTIVE USERS */}
+                    return logDate === today;
+                  }).length
+                }
+              </p>
+            </div>
 
-          <div
-            className="
-            bg-white
-            rounded-3xl
-            p-6
-            shadow-sm
-          "
-          >
-            <h3 className="text-gray-500">Active Users</h3>
+            {/* ACTIVE USERS */}
 
-            <p
+            <div
               className="
-              text-4xl
-              font-bold
-              mt-3
-              text-purple-600
+              bg-white
+              rounded-3xl
+              p-6
+              shadow-sm
             "
             >
-              {new Set(logs.map((log) => log[7])).size}
-            </p>
+              <h3 className="text-gray-500">Active Users</h3>
+
+              <p
+                className="
+                text-4xl
+                font-bold
+                mt-3
+                text-purple-600
+              "
+              >
+                {new Set(logs.map((log) => log[7])).size}
+              </p>
+            </div>
+            {/* LAST LOG */}
+
+            <div
+              className="
+    bg-white
+    rounded-3xl
+    p-6
+    shadow-sm
+  "
+            >
+              <h3 className="text-gray-500">Last Log</h3>
+
+              <p
+                className="
+      text-lg
+      font-bold
+      mt-3
+      text-orange-600
+    "
+              >
+                {logs.length > 0
+                  ? `${new Date(logs[logs.length - 1][1]).toLocaleDateString(
+                      "en-IN",
+                    )} • ${
+                      logs[logs.length - 1][3]
+                    } by ${logs[logs.length - 1][7]}`
+                  : "--"}
+              </p>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* LOGS TABLE */}
 
-        <LogsTable logs={logs} loadingLogs={loadingLogs} />
+        <LogsTable
+          logs={logs}
+          loadingLogs={loadingLogs}
+          hideStats={user.role === "Admin"}
+        />
       </div>
     </div>
   );

@@ -1,11 +1,9 @@
 import { useState } from "react";
-
+import { toast } from "react-toastify";
 import { saveLog } from "../services/api";
 
 function AddLog({ user }) {
   const [loading, setLoading] = useState(false);
-
-  const [message, setMessage] = useState("");
 
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split("T")[0],
@@ -37,19 +35,16 @@ function AddLog({ user }) {
 
     setLoading(true);
 
-    setMessage("");
-
     try {
       const payload = {
         ...formData,
-
         user: user.username,
       };
 
       const result = await saveLog(payload);
 
       if (result.status === "success") {
-        setMessage("Log Saved Successfully");
+        toast.success("Log Saved Successfully ✅");
 
         setFormData({
           date: new Date().toISOString().split("T")[0],
@@ -68,13 +63,15 @@ function AddLog({ user }) {
           remarks: "",
         });
       } else {
-        setMessage("Failed to save log");
+        toast.error("Failed to save log");
       }
     } catch (error) {
-      setMessage("Server Error");
-    }
+      console.error(error);
 
-    setLoading(false);
+      toast.error("Server Error");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -313,12 +310,6 @@ function AddLog({ user }) {
         >
           {loading ? "Saving..." : "Save Log"}
         </button>
-
-        {/* MESSAGE */}
-
-        {message && (
-          <p className="text-center text-green-600 font-medium">{message}</p>
-        )}
       </form>
     </div>
   );

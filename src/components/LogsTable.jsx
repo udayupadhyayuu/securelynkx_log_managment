@@ -208,7 +208,7 @@ function LogsTable({ logs = [], loadingLogs }) {
           <td style="padding:8px;">${formatDate(log[1])}</td>
           <td style="padding:8px;">${log[2]}</td>
           <td style="padding:8px;">${log[3]}</td>
-          <td style="padding:8px;">${log[4]}</td>
+          <td style="padding:8px;">${formatTime(log[4])}</td>
           <td style="padding:8px;">${log[5]}</td>
           <td style="padding:8px;">${log[6]}</td>
         </tr>
@@ -239,7 +239,7 @@ function LogsTable({ logs = [], loadingLogs }) {
       Date: formatDate(log[1]),
       "Assigned By": log[2],
       Property: log[3],
-      Time: log[4],
+      Time: formatTime(log[4]),
       Purpose: log[5],
       Remarks: log[6],
       User: log[7],
@@ -754,7 +754,7 @@ function LogsTable({ logs = [], loadingLogs }) {
                     </td>
 
                     <td className="px-4 py-5 align-top whitespace-nowrap">
-                      {log[4]}
+                      {formatTime(log[4])}
                     </td>
 
                     <td

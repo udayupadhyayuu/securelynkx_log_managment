@@ -77,35 +77,16 @@ function Login({ setUser }) {
         {/* LOGO */}
 
         <div className="text-center mb-8">
-          <div
+          <img
+            src="/slx-logo.png"
+            alt="Securelynkx"
             className="
-            w-20
-            h-20
-            mx-auto
-            rounded-3xl
-            bg-blue-600
-            flex
-            items-center
-            justify-center
-            text-white
-            text-3xl
-            font-bold
-            shadow-lg
-            mb-5
-          "
-          >
-            S
-          </div>
-
-          <h1
-            className="
-            text-4xl
-            font-bold
-            text-gray-800
-          "
-          >
-            Securelynkx
-          </h1>
+    w-65
+    mx-auto
+    mb-5
+    drop-shadow-lg
+  "
+          />
 
           <p
             className="

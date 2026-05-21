@@ -23,6 +23,20 @@ function LogsTable({ logs = [], loadingLogs }) {
     return date.toLocaleDateString("en-IN");
   }
 
+  function formatTime(timeValue) {
+    if (!timeValue) return "--";
+
+    const date = new Date(timeValue);
+
+    return date
+      .toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      })
+      .toUpperCase();
+  }
+
   // TODAY DATE
 
   const today = new Date().toLocaleDateString("en-CA");
@@ -157,8 +171,9 @@ function LogsTable({ logs = [], loadingLogs }) {
       : null;
 
   const lastLogTime = latestLog
-    ? `${formatDate(latestLog[1])} • ${latestLog[4]}`
+    ? `${formatDate(latestLog[1])} • ${formatTime(latestLog[4])}`
     : "--";
+
   // SORT FUNCTION
 
   const handleSort = (field) => {

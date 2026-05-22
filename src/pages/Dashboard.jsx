@@ -1,10 +1,28 @@
 import Sidebar from "../components/Sidebar";
+import { useEffect, useState } from "react";
 
+import { getUsers } from "../services/api";
 import Navbar from "../components/Navbar";
 
 import LogsTable from "../components/LogsTable";
 
 function Dashboard({ user, logs, loadingLogs, darkMode, setDarkMode }) {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  async function loadUsers() {
+    try {
+      const data = await getUsers();
+
+      setUsers(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div
       className="
@@ -108,7 +126,10 @@ function Dashboard({ user, logs, loadingLogs, darkMode, setDarkMode }) {
                 text-purple-600
               "
               >
-                {new Set(logs.map((log) => log[7])).size}
+                {
+                  users.filter((item) => item[7]?.toLowerCase() === "active")
+                    .length
+                }
               </p>
             </div>
             {/* LAST LOG */}

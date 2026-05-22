@@ -708,9 +708,7 @@ function LogsTable({ logs = [], loadingLogs, hideStats = false }) {
 
                 <th className="px-4 py-5 text-left whitespace-nowrap">Time</th>
 
-                <th className="px-4 py-5 text-left whitespace-nowrap">
-                  Purpose
-                </th>
+                <th className="px-4 py-5 text-left whitespace-nowrap">Issue</th>
 
                 <th className="px-4 py-5 text-left whitespace-nowrap">
                   Remarks
